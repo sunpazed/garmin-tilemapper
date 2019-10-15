@@ -1,0 +1,3 @@
+<build>
+  <exclude annotation="thirtynine"/>
+</build>

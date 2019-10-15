@@ -1,0 +1,17 @@
+<resources>
+
+    <fonts>
+      <font id="u200_dial" filename="body.fnt" antialias="true"/>
+      <font id="u200_hand_0_14" filename="hand-0-14.fnt" antialias="true"/>
+      <font id="u200_hand_15_29" filename="hand-15-29.fnt" antialias="true"/>
+      <font id="u200_hand_30_44" filename="hand-30-44.fnt" antialias="true"/>
+      <font id="u200_hand_45_59" filename="hand-45-59.fnt" antialias="true"/>
+    </fonts>
+
+    <jsonData id="dialData" filename="body.json"/>
+    <jsonData id="u200_hand_0_14_data" filename="hand-0-14.json"/>
+    <jsonData id="u200_hand_15_29_data" filename="hand-15-29.json"/>
+    <jsonData id="u200_hand_30_44_data" filename="hand-30-44.json"/>
+    <jsonData id="u200_hand_45_59_data" filename="hand-45-59.json"/>
+
+</resources>
