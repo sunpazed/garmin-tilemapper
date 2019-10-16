@@ -124,7 +124,7 @@ class BasicView extends Ui.WatchFace {
 
 
       // clear the screen
-      dc.setColor(0x000000, 0x55dddd);
+      dc.setColor(0x000000, 0x000000);
       dc.clear();
 
       drawTime(dc,0,0);
@@ -146,24 +146,16 @@ class BasicView extends Ui.WatchFace {
       current_hand = Ui.loadResource(Rez.JsonData.dialData);
 
       // draw chapters
-      targetDc.setColor(0x000000, Gfx.COLOR_TRANSPARENT);
+      targetDc.setColor(0xff0000, Gfx.COLOR_TRANSPARENT);
       drawTiles(current_hand[0],f_hands,targetDc,this_x,this_y);
 
-      // draw face
+      // draw markers
       targetDc.setColor(0xffffff, Gfx.COLOR_TRANSPARENT);
       drawTiles(current_hand[1],f_hands,targetDc,this_x,this_y);
 
-      // draw tongue and shorts
+      // draw romans
       targetDc.setColor(0xff0000, Gfx.COLOR_TRANSPARENT);
       drawTiles(current_hand[2],f_hands,targetDc,this_x,this_y);
-
-      // draw shoes
-      targetDc.setColor(0xffaa00, Gfx.COLOR_TRANSPARENT);
-      drawTiles(current_hand[3],f_hands,targetDc,this_x,this_y);
-
-      // finally, draw the black outline
-      targetDc.setColor(0x000000, Gfx.COLOR_TRANSPARENT);
-      drawTiles(current_hand[4],f_hands,targetDc,this_x,this_y);
 
 
       // draw hour hand
@@ -173,33 +165,21 @@ class BasicView extends Ui.WatchFace {
       var hr_is = hour_is;
 
       // load the appropriate tilemaps as
-      // hours are split across four tilemaps;
-      // 0_14, 15_29, 30_44, 45_59
-      if (hour_is>=45 && hour_is<=59) {
-        f_hands = Ui.loadResource(Rez.Fonts.font_hand_45_59);
-        current_hand = Ui.loadResource(Rez.JsonData.font_hand_45_59_data);
-        hr_is = hour_is - 45;
-      }
-      if (hour_is>=30 && hour_is<=44) {
-        f_hands = Ui.loadResource(Rez.Fonts.font_hand_30_44);
-        current_hand = Ui.loadResource(Rez.JsonData.font_hand_30_44_data);
+      // hours are split across two tilemaps;
+      // 0_29, 30_59
+      if (hour_is>=30 && hour_is<60) {
+        f_hands = Ui.loadResource(Rez.Fonts.font_hour_30_59);
+        current_hand = Ui.loadResource(Rez.JsonData.font_hour_30_59_data);
         hr_is = hour_is - 30;
       }
-      if (hour_is>=15 && hour_is<=29) {
-        f_hands = Ui.loadResource(Rez.Fonts.font_hand_15_29);
-        current_hand = Ui.loadResource(Rez.JsonData.font_hand_15_29_data);
-        hr_is = hour_is - 15;
-      }
-      if (hour_is>=0 && hour_is<=14) {
-        f_hands = Ui.loadResource(Rez.Fonts.font_hand_0_14);
-        current_hand = Ui.loadResource(Rez.JsonData.font_hand_0_14_data);
+      if (hour_is>=0 && hour_is<30) {
+        f_hands = Ui.loadResource(Rez.Fonts.font_hour_0_29);
+        current_hand = Ui.loadResource(Rez.JsonData.font_hour_0_29_data);
         hr_is = hour_is;
       }
 
       // let's draw the actual hour hand tilemap
       targetDc.setColor(0xffffff, Gfx.COLOR_TRANSPARENT);
-      drawTiles(current_hand[hr_is+15],f_hands,targetDc,this_x,this_y);
-      targetDc.setColor(0x000000, Gfx.COLOR_TRANSPARENT);
       drawTiles(current_hand[hr_is],f_hands,targetDc,this_x,this_y);
 
 
@@ -209,39 +189,26 @@ class BasicView extends Ui.WatchFace {
       var min = minute;
 
       // load the appropriate tilemaps as
-      // minutes are split across four tilemaps;
-      // 0_14, 15_29, 30_44, 45_59
-      if (minute>=45 && minute<=59) {
-        f_hands = Ui.loadResource(Rez.Fonts.font_hand_45_59);
-        current_hand = Ui.loadResource(Rez.JsonData.font_hand_45_59_data);
-        min = minute - 45;
-      }
-      if (minute>=30 && minute<=44) {
-        f_hands = Ui.loadResource(Rez.Fonts.font_hand_30_44);
-        current_hand = Ui.loadResource(Rez.JsonData.font_hand_30_44_data);
+      // hours are split across two tilemaps;
+      // 0_29, 30_59
+      if (minute>=30 && minute<60) {
+        f_hands = Ui.loadResource(Rez.Fonts.font_min_30_59);
+        current_hand = Ui.loadResource(Rez.JsonData.font_min_30_59_data);
         min = minute - 30;
       }
-      if (minute>=15 && minute<=29) {
-        f_hands = Ui.loadResource(Rez.Fonts.font_hand_15_29);
-        current_hand = Ui.loadResource(Rez.JsonData.font_hand_15_29_data);
-        min = minute - 15;
-      }
-      if (minute>=0 && minute<=14) {
-        f_hands = Ui.loadResource(Rez.Fonts.font_hand_0_14);
-        current_hand = Ui.loadResource(Rez.JsonData.font_hand_0_14_data);
+      if (minute>=0 && minute<30) {
+        f_hands = Ui.loadResource(Rez.Fonts.font_min_0_29);
+        current_hand = Ui.loadResource(Rez.JsonData.font_min_0_29_data);
         min = minute;
       }
 
       // let's draw the actual minute hand tilemap
       targetDc.setColor(0xffffff, Gfx.COLOR_TRANSPARENT);
-      drawTiles(current_hand[min+15],f_hands,targetDc,this_x,this_y);
-      targetDc.setColor(0x000000, Gfx.COLOR_TRANSPARENT);
       drawTiles(current_hand[min],f_hands,targetDc,this_x,this_y);
 
 
     }
 
-    (:twentyfour)
     function drawTiles(current_hand,font,dc,xoff,yoff) {
 
       for(var i = 0; i < current_hand.size(); i++)
@@ -263,27 +230,6 @@ class BasicView extends Ui.WatchFace {
 
     }
 
-    (:thirtynine)
-    function drawTiles(current_hand,font,dc,xoff,yoff) {
-
-      for(var i = 0; i < current_hand.size(); i++)
-      {
-        var packed_value = current_hand[i];
-
-        var ypos = packed_value & 255;
-        packed_value >>= 8;
-        var xpos = packed_value & 255;
-        packed_value >>= 8;
-        var char_b = packed_value & 255;
-        packed_value >>= 8;
-        var char_a = packed_value & 255;
-
-        var char = char_a + char_b;
-
-        dc.drawText(xoff+(xpos + (xpos <<1) + (xpos<<2) + (xpos<<5)),yoff+(ypos + (ypos <<1) + (ypos<<2) + (ypos<<5)),font,(char.toNumber()).toChar(),Gfx.TEXT_JUSTIFY_LEFT);
-      }
-
-    }
 
     //! Called when this View is removed from the screen. Save the
     //! state of this View here. This includes freeing resources from

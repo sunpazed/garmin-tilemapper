@@ -1,0 +1,11 @@
+<resources>
+
+    <strings>
+      <string id="AppName">Analogue Tilemap</string>
+    </strings>
+
+    <drawables>
+      <bitmap id="LauncherIcon" filename="bitmaps/launcher_icon.png" />
+    </drawables>
+
+</resources>

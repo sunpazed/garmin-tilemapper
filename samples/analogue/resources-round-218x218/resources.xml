@@ -1,0 +1,17 @@
+<resources>
+
+    <fonts>
+      <font id="font_dial" filename="dial.fnt" antialias="true"/>
+      <font id="font_min_0_29" filename="minute-0-29.fnt" antialias="true"/>
+      <font id="font_min_30_59" filename="minute-30-59.fnt" antialias="true"/>
+      <font id="font_hour_0_29" filename="hour-0-29.fnt" antialias="true"/>
+      <font id="font_hour_30_59" filename="hour-30-59.fnt" antialias="true"/>
+    </fonts>
+
+    <jsonData id="dialData" filename="dial.json"/>
+    <jsonData id="font_min_0_29_data" filename="minute-0-29.json"/>
+    <jsonData id="font_min_30_59_data" filename="minute-30-59.json"/>
+    <jsonData id="font_hour_0_29_data" filename="hour-0-29.json"/>
+    <jsonData id="font_hour_30_59_data" filename="hour-30-59.json"/>
+
+</resources>
