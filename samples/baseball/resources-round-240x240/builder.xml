@@ -1,0 +1,4 @@
+<build>
+  <exclude annotation="thirtynine"/>
+  <exclude annotation="twentyeight"/>
+</build>
