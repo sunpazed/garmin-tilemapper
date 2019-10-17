@@ -124,7 +124,7 @@ class BasicView extends Ui.WatchFace {
 
 
       // clear the screen
-      dc.setColor(0x000000, 0x55dddd);
+      dc.setColor(0x000000, 0x000088);
       dc.clear();
 
       drawTime(dc,0,0);
@@ -145,23 +145,23 @@ class BasicView extends Ui.WatchFace {
       f_hands = Ui.loadResource(Rez.Fonts.font_dial);
       current_hand = Ui.loadResource(Rez.JsonData.dialData);
 
-      // draw chapters
-      targetDc.setColor(0x000000, Gfx.COLOR_TRANSPARENT);
+      // draw romans
+      targetDc.setColor(0xffffff, Gfx.COLOR_TRANSPARENT);
       drawTiles(current_hand[0],f_hands,targetDc,this_x,this_y);
 
       // draw markers
-      targetDc.setColor(0x000000, Gfx.COLOR_TRANSPARENT);
+      targetDc.setColor(0xffffff, Gfx.COLOR_TRANSPARENT);
       drawTiles(current_hand[1],f_hands,targetDc,this_x,this_y);
 
       // draw cap
       targetDc.setColor(0xff0000, Gfx.COLOR_TRANSPARENT);
       drawTiles(current_hand[2],f_hands,targetDc,this_x,this_y);
 
-      // finally, draw the black outline
+      // draw body
       targetDc.setColor(0xffffff, Gfx.COLOR_TRANSPARENT);
       drawTiles(current_hand[3],f_hands,targetDc,this_x,this_y);
 
-      // draw romans
+      // finally, draw the black outline
       targetDc.setColor(0x000000, Gfx.COLOR_TRANSPARENT);
       drawTiles(current_hand[4],f_hands,targetDc,this_x,this_y);
 
