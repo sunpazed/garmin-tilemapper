@@ -1,0 +1,26 @@
+<resources>
+
+    <fonts>
+      <font id="font_dial" filename="body.fnt" antialias="true"/>
+      <font id="font_hand_0_14" filename="hour-0-14.fnt" antialias="true"/>
+      <font id="font_hand_15_29" filename="hour-15-29.fnt" antialias="true"/>
+      <font id="font_hand_30_44" filename="hour-30-44.fnt" antialias="true"/>
+      <font id="font_hand_45_59" filename="hour-45-59.fnt" antialias="true"/>
+      <font id="font_min_0_14" filename="min-0-14.fnt" antialias="true"/>
+      <font id="font_min_15_29" filename="min-15-29.fnt" antialias="true"/>
+      <font id="font_min_30_44" filename="min-30-44.fnt" antialias="true"/>
+      <font id="font_min_45_59" filename="min-45-59.fnt" antialias="true"/>
+
+    </fonts>
+
+    <jsonData id="dialData" filename="body.json"/>
+    <jsonData id="font_hand_0_14_data" filename="hour-0-14.json"/>
+    <jsonData id="font_hand_15_29_data" filename="hour-15-29.json"/>
+    <jsonData id="font_hand_30_44_data" filename="hour-30-44.json"/>
+    <jsonData id="font_hand_45_59_data" filename="hour-45-59.json"/>
+    <jsonData id="font_min_0_14_data" filename="min-0-14.json"/>
+    <jsonData id="font_min_15_29_data" filename="min-15-29.json"/>
+    <jsonData id="font_min_30_44_data" filename="min-30-44.json"/>
+    <jsonData id="font_min_45_59_data" filename="min-45-59.json"/>
+
+</resources>
