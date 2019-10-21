@@ -7,12 +7,13 @@ import argparse
 import math
 from pathlib import Path
 
-VERSION = '0.9.0'
+VERSION = '0.9.1'
 DESCRIPTION = 'CIQ tilemapper {0} (c) 2017-2019 Franco Trimboli'.format(VERSION)
 
 # globals
 TILE_SIZE = 24
 SCREEN_SIZE = 240
+MAX_CHARS = 512
 
 tileTable = []
 hashTable = {}
@@ -369,6 +370,7 @@ def processTiles(canvas,tileSize,fontCanvas):
     global fontTileX
     global fontTileY
     global TILE_SIZE
+    global MAX_CHARS
 
     canvasWidth = canvas.size[0]
     canvasHeight = canvas.size[1]
@@ -433,8 +435,8 @@ def processTiles(canvas,tileSize,fontCanvas):
 
 
                 # have we exceeded the maximum char size? if so, we quit
-                if charCurrent > (TILE_SIZE*TILE_SIZE):
-                    print('ERROR: number of tiles have exceeded maximum size ({0}). Try breaking your files up.'.format(TILE_SIZE*TILE_SIZE))
+                if charCurrent > (MAX_CHARS):
+                    print('ERROR: number of tiles have exceeded maximum size ({0}). Try breaking your files up, or use a larger tile size.'.format(MAX_CHARS))
                     quit()
 
 
