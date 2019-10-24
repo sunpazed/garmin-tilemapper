@@ -7,7 +7,7 @@ import argparse
 import math
 from pathlib import Path
 
-VERSION = '0.9.1'
+VERSION = '0.9.2'
 DESCRIPTION = 'CIQ tilemapper {0} (c) 2017-2019 Franco Trimboli'.format(VERSION)
 
 # globals
@@ -337,23 +337,22 @@ def generateDataFile():
     return groupData
 
 # data in the json file is an array of signed 32-bit integers,
-# and each integer is 4x byte-packed as follows (font-char 16-bits, x-pos 8-bit, y-pos 8-bit).
+# and each integer is bit-packed as follows;
+# 0b00000000000000000000111111111111 = font char, 12-bits
+# 0b00000000001111111111000000000000 = x pos, 10-bits
+# 0b11111111110000000000000000000000 = y pos, 10-bits
 def packData(x,y,char):
 
-    a = 255 if (char/255 > 1) else char
-    b = char%255 if (char/255 > 1) else 0
-    c = x
-    d = y
+    global TILE_SIZE
 
-    u = ctypes.c_short(a)
+    dx = x*TILE_SIZE
+    dy = y*TILE_SIZE
 
-    u = a
-    u <<= 8
-    u |= b
-    u <<= 8
-    u |= c
-    u <<= 8
-    u |= d
+    ymask = 0xFFC00000
+    xmask = 0x003FF000
+    charmask = 0x00000FFF
+
+    u = (char&charmask)|((dx<<12)&xmask)|((dy<<22)&ymask)
 
     return ctypes.c_int32(u).value
 

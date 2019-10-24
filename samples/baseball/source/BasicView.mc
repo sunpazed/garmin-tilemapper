@@ -245,68 +245,17 @@ class BasicView extends Ui.WatchFace {
 
     }
 
-    (:twentyfour)
     function drawTiles(current_hand,font,dc,xoff,yoff) {
 
       for(var i = 0; i < current_hand.size(); i++)
       {
         var packed_value = current_hand[i];
 
-        var ypos = packed_value & 255;
-        packed_value >>= 8;
-        var xpos = packed_value & 255;
-        packed_value >>= 8;
-        var char_b = packed_value & 255;
-        packed_value >>= 8;
-        var char_a = packed_value & 255;
+        var char = (packed_value&0x00000FFF);
+        var xpos = (packed_value&0x003FF000)>>12;
+        var ypos = (packed_value&0xFFC00000)>>22;
 
-        var char = char_a + char_b;
-
-        dc.drawText(xoff+(((xpos << 2) - xpos) << 3),yoff+(((ypos << 2) - ypos) << 3),font,(char.toNumber()).toChar(),Gfx.TEXT_JUSTIFY_LEFT);
-      }
-
-    }
-
-    (:twentyeight)
-    function drawTiles(current_hand,font,dc,xoff,yoff) {
-
-      for(var i = 0; i < current_hand.size(); i++)
-      {
-        var packed_value = current_hand[i];
-
-        var ypos = packed_value & 255;
-        packed_value >>= 8;
-        var xpos = packed_value & 255;
-        packed_value >>= 8;
-        var char_b = packed_value & 255;
-        packed_value >>= 8;
-        var char_a = packed_value & 255;
-
-        var char = char_a + char_b;
-
-        dc.drawText(xoff+(((xpos << 3) - xpos) << 2),yoff+(((ypos << 3) - ypos) << 2),font,(char.toNumber()).toChar(),Gfx.TEXT_JUSTIFY_LEFT);
-      }
-
-    }
-
-    (:thirtynine)
-    function drawTiles(current_hand,font,dc,xoff,yoff) {
-
-      for(var i = 0; i < current_hand.size(); i++)
-      {
-        var packed_value = current_hand[i];
-
-        var ypos = packed_value & 255;
-        packed_value >>= 8;
-        var xpos = packed_value & 255;
-        packed_value >>= 8;
-        var char_b = packed_value & 255;
-        packed_value >>= 8;
-        var char_a = packed_value & 255;
-
-        var char = char_a + char_b;
-
-        dc.drawText(xoff+(xpos + (xpos <<1) + (xpos<<2) + (xpos<<5)),yoff+(ypos + (ypos <<1) + (ypos<<2) + (ypos<<5)),font,(char.toNumber()).toChar(),Gfx.TEXT_JUSTIFY_LEFT);
+        dc.drawText(xoff+xpos,yoff+ypos,font,(char.toNumber()).toChar(),Gfx.TEXT_JUSTIFY_LEFT);
       }
 
     }

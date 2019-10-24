@@ -209,23 +209,18 @@ class BasicView extends Ui.WatchFace {
 
     }
 
+
     function drawTiles(current_hand,font,dc,xoff,yoff) {
 
       for(var i = 0; i < current_hand.size(); i++)
       {
         var packed_value = current_hand[i];
 
-        var ypos = packed_value & 255;
-        packed_value >>= 8;
-        var xpos = packed_value & 255;
-        packed_value >>= 8;
-        var char_b = packed_value & 255;
-        packed_value >>= 8;
-        var char_a = packed_value & 255;
+        var char = (packed_value&0x00000FFF);
+        var xpos = (packed_value&0x003FF000)>>12;
+        var ypos = (packed_value&0xFFC00000)>>22;
 
-        var char = char_a + char_b;
-
-        dc.drawText(xoff+(((xpos << 2) - xpos) << 3),yoff+(((ypos << 2) - ypos) << 3),font,(char.toNumber()).toChar(),Gfx.TEXT_JUSTIFY_LEFT);
+        dc.drawText(xoff+xpos,yoff+ypos,font,(char.toNumber()).toChar(),Gfx.TEXT_JUSTIFY_LEFT);
       }
 
     }
