@@ -7,13 +7,13 @@ import argparse
 import math
 from pathlib import Path
 
-VERSION = '0.9.2'
+VERSION = '0.9.3'
 DESCRIPTION = 'CIQ tilemapper {0} (c) 2017-2019 Franco Trimboli'.format(VERSION)
 
 # globals
 TILE_SIZE = 24
 SCREEN_SIZE = 240
-MAX_CHARS = 512
+MAX_CHARS = 576
 
 tileTable = []
 hashTable = {}
@@ -187,7 +187,7 @@ def processAngle(canvas,fontCanvas, angleStart, angleStop, angleSteps):
         currentFrame = 0
 
         for angle in range(angleStart, angleStop+angleSteps, angleSteps):
-            currentCanvas = canvas.rotate(angle, Image.BILINEAR)
+            currentCanvas = canvas.rotate(angle, Image.BICUBIC)
             currentCanvas = scaleCanvas(currentCanvas,destinationResolution)
             tileArray = processTiles(currentCanvas,TILE_SIZE,fontCanvas)
             tileTable.append(tileArray)
@@ -234,7 +234,10 @@ def sanitiseCanvas(canvas):
 
 # scale image to destination
 def scaleCanvas(canvas,newsize):
-    return canvas.resize((newsize,newsize), Image.BILINEAR)
+    if (canvas.size[0] == newsize):
+        return canvas
+    else:
+        return canvas.resize((newsize,newsize), Image.LANCZOS)
 
 # invert the canvas as per the font spec
 def invertCanvas(canvas):
