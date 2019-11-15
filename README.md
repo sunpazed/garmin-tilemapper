@@ -111,4 +111,4 @@ As an early release tool, there are heaps of bugs. Here are some key rules to fo
 
 #### Contact me
 
-Have some useful feedback, or need help? Contact me by contributing to this thread in the Garmin Developer Forum.
+Have some useful feedback, or need help? Contact me by contributing to this thread in the [Garmin Developer Forum](https://forums.garmin.com/developer/connect-iq/f/discussion/195648/tilemapper-tool-for-tile-mapped-anti-aliased-graphics).
