@@ -89,8 +89,8 @@ def main():
 
             if args.mode == 'rotate':
                 # angle function
-                angleStart,angleStop,angleSteps = args.angle_begin, args.angle_end, args.angle_step
-                processAngle(canvas,fontCanvas,angleStart,angleStop,angleSteps)
+                angleStart,angleStop,angleSteps,angleSkip,angleDraw = args.angle_begin, args.angle_end, args.angle_step, args.angle_skip, args.angle_draw
+                processAngle(canvas,fontCanvas,angleStart,angleStop,angleSteps,angleSkip,angleDraw)
             else:
                 # single frame function
                 canvas = scaleCanvas(canvas,destinationResolution)
@@ -137,6 +137,8 @@ def parseArgs():
     parser.add_argument("-u",'--angle-begin', type=int, help='begin angle (rotate mode)')
     parser.add_argument("-v",'--angle-end', type=int, help='end angle (rotate mode)')
     parser.add_argument("-s",'--angle-step', type=int, help='step between angles (rotate mode)')
+    parser.add_argument("-p",'--angle-skip', type=int, help='angle to skip drawing (rotate mode)')
+    parser.add_argument("-w",'--angle-draw', type=int, help='angle to draw (rotate mode)')
     parser.add_argument("-t",'--tile-size', type=int, default=24, help='tile size (experimental)')
 
     args = parser.parse_args()
@@ -149,6 +151,13 @@ def parseArgs():
         ):
 
         parser.error('The --mode (-m) argument in \'rotate\' requires the --angle-begin, --angle-end, and --angle-step arguments')
+
+    elif (args.mode == 'rotate' and not ( isinstance(args.angle_skip,int) and isinstance(args.angle_draw,int) )):
+        
+        #if in rotate mode but no skip or draw angle was defined we set skip to 0 and draw to the complete interval set by the user
+        args.angle_skip = 0
+        args.angle_draw = args.angle_end - args.angle_begin
+
 
     return args
 
@@ -164,7 +173,7 @@ def processFrames(canvas,fontCanvas):
         tileArray = processTiles(canvas,TILE_SIZE,fontCanvas)
         tileTable.append(tileArray)
 
-        currentFrame += 1;
+        currentFrame += 1
         progress = '{:2.1%}'.format(currentFrame / numberOfFrames)
 
         print("Progress: {0}, frames: {1}, tiles: {2}".format(progress,len(tileTable),len(hashTable)), end="\r")
@@ -175,24 +184,34 @@ def processFrames(canvas,fontCanvas):
         return
 
 # rotate and process a multile frames into tiles
-def processAngle(canvas,fontCanvas, angleStart, angleStop, angleSteps):
+def processAngle(canvas,fontCanvas, angleStart, angleStop, angleSteps, angleSkip, angleDraw):
 
         global TILE_SIZE
         global destinationResolution
 
-        numberOfFrames = len(range(angleStart, angleStop+angleSteps, angleSteps))
+        numberOfFrames = len(range(angleStart, angleStop, angleSteps))
 
         print('{0} frame(s) to process '.format(numberOfFrames))
 
+        stepsToDraw  = math.floor(angleDraw / angleSteps)   #Floored because we must have a full angleStep available to be able to draw
+        stepsToSkip  = math.ceil(angleSkip / angleSteps)    #Ceiled to compensate for the previous floor
+        steps = 0                                           #Track how many steps have been taken
+
         currentFrame = 0
 
-        for angle in range(angleStart, angleStop+angleSteps, angleSteps):
+        for angle in range(angleStart, angleStop, angleSteps):
             currentCanvas = canvas.rotate(angle, Image.BICUBIC)
             currentCanvas = scaleCanvas(currentCanvas,destinationResolution)
-            tileArray = processTiles(currentCanvas,TILE_SIZE,fontCanvas)
-            tileTable.append(tileArray)
-
-            currentFrame += 1;
+            if(steps <= stepsToDraw):                       #Draw
+                tileArray = processTiles(currentCanvas,TILE_SIZE,fontCanvas)
+                tileTable.append(tileArray)
+            elif(steps == (stepsToDraw + stepsToSkip)):     #Reset tracker
+                steps = 0
+                                                            #Else: do nothing(Do not draw)
+                                                            
+            
+            steps += 1
+            currentFrame += 1
             progress = '{:2.1%}'.format(currentFrame / numberOfFrames)
 
             print("Progress: {0}, frames: {1}, tiles: {2}".format(progress,len(tileTable),len(hashTable)), end="\r")
@@ -266,7 +285,7 @@ def checkTileForData(canvas):
         w = canvas.size[0]
         h = canvas.size[1]
         data = []
-        hasData = 0;
+        hasData = 0
 
         for u in range(w):
             for v in range(h):
