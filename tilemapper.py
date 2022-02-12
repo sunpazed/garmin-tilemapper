@@ -200,6 +200,7 @@ def processAngle(canvas,fontCanvas, angleStart, angleStop, angleSteps, angleSkip
         currentFrame = 0
 
         for angle in range(angleStart, angleStop, angleSteps):
+            steps += 1
             currentCanvas = canvas.rotate(angle, Image.BICUBIC)
             currentCanvas = scaleCanvas(currentCanvas,destinationResolution)
             if(steps <= stepsToDraw):                       #Draw
@@ -208,9 +209,6 @@ def processAngle(canvas,fontCanvas, angleStart, angleStop, angleSteps, angleSkip
             elif(steps == (stepsToDraw + stepsToSkip)):     #Reset tracker
                 steps = 0
                                                             #Else: do nothing(Do not draw)
-                                                            
-            
-            steps += 1
             currentFrame += 1
             progress = '{:2.1%}'.format(currentFrame / numberOfFrames)
 
